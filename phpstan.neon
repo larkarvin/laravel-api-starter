@@ -1,0 +1,26 @@
+includes:
+    - vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    level: 6
+
+    paths:
+        - app
+        - routes
+        - config
+        - database
+
+    excludePaths:
+        - database/migrations/2026_04_11_172442_create_telescope_entries_table.php
+
+    # Don't treat PHPDoc types as certain (avoids false positives with Laravel magic)
+    treatPhpDocTypesAsCertain: false
+
+    # Report unmatched ignored errors so the list stays clean
+    reportUnmatchedIgnoredErrors: false
+
+    ignoreErrors:
+        # Telescope gate reads env() at bootstrap time before config is cached — intentional.
+        -
+            message: '#Called .env. outside of the config directory#'
+            path: app/Providers/TelescopeServiceProvider.php
